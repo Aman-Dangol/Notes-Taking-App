@@ -41,23 +41,26 @@ const InputField = ({
   const { className: containerClassName, ...otherContainerProps } =
     containerProps ?? {};
 
+  const { className: labelClassName } = labelProps;
+
   return (
     <div
       className={`mx-auto w-[80%] ${containerClassName}`}
       {...otherContainerProps}
     >
-      <div className=" gap-2 md:gap-2 grid grid-cols-3 md:grid-cols-5 lg:gap-0 items-center">
-        <label {...labelProps}>{label}</label>
-
+      <div className="bg-white md:grid md:gap-2  md:grid-cols-5 lg:gap-0">
+        <label {...labelProps} className={` ${labelClassName}`}>
+          {label}
+        </label>
         {asChild === false ? (
           <div
-            className={`col-span-2 md:col-span-4 rounded-md py-1 flex gap-2 justify-between items-center px-2 bg-white`}
+            className={`col-span-2 flex md:col-span-4 rounded-md py lg:max-h-[35px] gap-2 justify-between items-center px-2 border-2 border-orange-500 bg-white`}
           >
             {prefix ? prefix : ""}
             <input
               type={type}
               ref={ref}
-              className={`${inputClassName} flex-1  outline-none`}
+              className={`${inputClassName} flex-0  outline-none`}
               {...inputProps}
             />
             {suffix ? suffix : ""}
