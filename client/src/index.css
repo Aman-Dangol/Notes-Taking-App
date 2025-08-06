@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+* {
+  font-family: "Poppins", "monospace";
+}
+
+body {
+  padding: 2px;
+  background-color: blanchedalmond;
+}
