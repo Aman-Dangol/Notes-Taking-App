@@ -7,5 +7,21 @@
 
 body {
   padding: 2px;
-  background-color: blanchedalmond;
+  background-color: #ffebcd;
+}
+
+.border-color {
+  @apply border-orange-500  border-2;
+}
+
+#login,
+#register {
+  display: none;
+}
+
+#auth:checked ~ #login {
+  display: block;
+}
+#auth:not(:checked) ~ #register {
+  display: block;
 }

@@ -48,7 +48,7 @@ const InputField = ({
       className={`mx-auto w-[80%] ${containerClassName}`}
       {...otherContainerProps}
     >
-      <div className="bg-white md:grid md:gap-2  md:grid-cols-5 lg:gap-0">
+      <div className="bg-white md:grid md:gap-2 items-center md:grid-cols-5 lg:gap-0">
         <label {...labelProps} className={` ${labelClassName}`}>
           {label}
         </label>
@@ -60,7 +60,7 @@ const InputField = ({
             <input
               type={type}
               ref={ref}
-              className={`${inputClassName} flex-0  outline-none`}
+              className={`${inputClassName} flex-0  outline-none py-1`}
               {...inputProps}
             />
             {suffix ? suffix : ""}
