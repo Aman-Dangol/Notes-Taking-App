@@ -1,13 +1,18 @@
 import { zodValidator } from "@/middlewares/zod-validator/zodValidator";
 import { registerScehma } from "@/zodSchema/register-schema";
-import express, { NextFunction, Request, Response } from "express";
-import { createUser, getUserByEmail } from "@/controller/user-controller";
+import express from "express";
+
+import { loginScehma } from "@/zodSchema/login-schema";
+import {
+  checkEmailInDb,
+  userLogin,
+  getUserByEmail,
+  createUser,
+} from "@/controller/auth-controller";
 
 const authRouter = express.Router();
 
-authRouter.get("/login", (req, res) => {
-  res.json({ message: "auth-router" });
-});
+authRouter.post("/login", zodValidator(loginScehma), checkEmailInDb, userLogin);
 
 authRouter.post(
   "/register",

@@ -16,12 +16,13 @@ interface tokenGenerationProps {
   payload: object;
 }
 
-const generate = ({ expiresIn = "1h", payload }: tokenGenerationProps) => {
+export const generateToken = ({
+  expiresIn = "1h",
+  payload,
+}: tokenGenerationProps) => {
   const token = jwt.sign(payload, process.env.SECRET_KEY || "", {
     expiresIn,
   });
 
-  console.log(token);
+  return token;
 };
-
-export { generate };

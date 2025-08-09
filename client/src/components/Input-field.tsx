@@ -60,7 +60,7 @@ const InputField = ({
             <input
               type={type}
               ref={ref}
-              className={`${inputClassName} flex-0  outline-none py-1`}
+              className={`${inputClassName} flex-1  outline-none py-1`}
               {...inputProps}
             />
             {suffix ? suffix : ""}

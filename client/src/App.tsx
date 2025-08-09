@@ -1,9 +1,21 @@
+import { useAppSelector } from "@/utils/hooks/redux-hook/store-hooks";
 import { Login } from "./Pages/login";
-
+import { Outlet } from "react-router";
 function App() {
-  const Element = Login;
+  const appSelector = useAppSelector((state) => state.accessToken.value);
 
-  return <Element />;
+  let Element = <Login />;
+
+  if (appSelector) {
+    Element = <Outlet />;
+  }
+
+  return (
+    <>
+      {appSelector}
+      {Element}
+    </>
+  );
 }
 
 export default App;
