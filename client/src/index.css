@@ -25,3 +25,7 @@ body {
 #auth:not(:checked) ~ #register {
   display: block;
 }
+
+.error {
+  @apply text-red-600;
+}

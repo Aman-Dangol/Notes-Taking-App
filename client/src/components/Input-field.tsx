@@ -45,12 +45,12 @@ const InputField = ({
 
   return (
     <div
-      className={`mx-auto w-[80%] ${containerClassName}`}
+      className={`mx-auto w-[80%] mb-2 ${containerClassName}`}
       {...otherContainerProps}
     >
       <div className="bg-white md:grid md:gap-2 items-center md:grid-cols-5 lg:gap-0">
         <label {...labelProps} className={` ${labelClassName}`}>
-          {label}
+          {label} :
         </label>
         {asChild === false ? (
           <div
@@ -69,7 +69,7 @@ const InputField = ({
           children
         )}
       </div>
-      <p className="error h-2">{errorMessage} </p>
+      <p className="error">{errorMessage} </p>
     </div>
   );
 };
