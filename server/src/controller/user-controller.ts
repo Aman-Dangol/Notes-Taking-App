@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import prisma from "../../prisma/connect";
 import { User } from "../../generated/prisma";
 import { CustomRequest } from "../utility/types/custom-request";
+import { registerData } from "@/zodSchema/register-schema";
 
 const getUsers = async (_: Request, res: Response<{ users: User[] }>) => {
   const users = await prisma.user.findMany();
@@ -16,7 +17,7 @@ const getUser = async (
 ) => {
   const user = await prisma.user.findUnique({
     where: {
-      id: parseInt(request.query.userID),
+      id: request.query.userID,
     },
   });
 
@@ -27,8 +28,26 @@ const getUser = async (
   res.sendStatus(404).json({ err: "err" });
 };
 
+const getUserByEmail = async (
+  request: CustomRequest<registerData>,
+  res: Response,
+  next: NextFunction
+) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      email: request.body.email,
+    },
+  });
+  if (!user) {
+    next();
+    return;
+  }
+
+  res.json({ message: "email is already taken" });
+};
+
 const createUser = async (
-  req: CustomRequest<Omit<User, "id">>,
+  req: CustomRequest<registerData>,
   res: Response<{ message: string }>
 ) => {
   prisma.user
@@ -37,7 +56,7 @@ const createUser = async (
     })
     .then(() => {
       res.json({
-        message: "success",
+        message: "data created successfully",
       });
     })
     .catch(() => {
@@ -47,4 +66,4 @@ const createUser = async (
     });
 };
 
-export { getUsers, getUser, createUser };
+export { getUsers, getUser, createUser, getUserByEmail };
