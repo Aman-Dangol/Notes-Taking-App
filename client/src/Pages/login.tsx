@@ -13,11 +13,10 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { LuArrowRight, LuArrowLeft } from "react-icons/lu";
-import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const dipatcher = useAppDisptach();
-  const navigate = useNavigate();
   const registerFormMethods = useForm<registerInputSchema>({
     mode: "onChange",
     resolver: zodResolver(registerSchema),
@@ -52,7 +51,10 @@ const Login = () => {
     options: {
       onSuccess(data) {
         dipatcher(setAccessToken(data.accessToken));
-        navigate("/home");
+        toast.success("Logged in successfully");
+      },
+      onError(data) {
+        toast.error(data.response?.data.message);
       },
     },
   });

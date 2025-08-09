@@ -8,6 +8,7 @@ import {
   userLogin,
   getUserByEmail,
   createUser,
+  validateToken,
 } from "@/controller/auth-controller";
 
 const authRouter = express.Router();
@@ -20,5 +21,7 @@ authRouter.post(
   getUserByEmail,
   createUser
 );
+
+authRouter.get("/verify-token", validateToken);
 
 export { authRouter };

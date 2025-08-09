@@ -1,5 +1,5 @@
 import App from "@/App";
-import { Home } from "@/Pages/Home";
+import { Home } from "@/Pages/Home/Home";
 import type { RouteObject } from "react-router";
 
 const ProtectedRoutes: RouteObject[] = [
@@ -8,7 +8,7 @@ const ProtectedRoutes: RouteObject[] = [
     Component: App,
     children: [
       {
-        path: "home",
+        path: "",
         Component: Home,
       },
     ],

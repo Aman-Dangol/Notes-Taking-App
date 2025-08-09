@@ -6,6 +6,8 @@ import { registerData } from "@/zodSchema/register-schema";
 import { NextFunction, Response } from "express";
 import { User } from "../../generated/prisma";
 import prisma from "../../prisma/connect";
+import jwt from "jsonwebtoken";
+import { verifyToken } from "@/utility/verify-tokens";
 
 // to check if the email already exists in the DB
 export const getUserByEmail = async (
@@ -43,7 +45,7 @@ export const checkEmailInDb = async (
     return;
   }
 
-  res.json({ message: "email doesn't exist" });
+  res.status(404).json({ message: "email doesn't exist" });
 };
 
 export const userLogin = async (
@@ -71,7 +73,7 @@ export const userLogin = async (
     res.json({ accessToken });
     return;
   }
-  res.json({
+  res.status(404).json({
     message: "invalid credentials",
   });
 };
@@ -97,4 +99,44 @@ export const createUser = async (
         message: "error",
       });
     });
+};
+
+// for every time  a page refreshes
+export const validateToken = (
+  req: CustomRequest,
+  res: Response<{ message: string; accessToken?: string }>,
+  next: NextFunction
+) => {
+  if (!req.headers.authorization) {
+    res.status(401).json({ message: "please login access token missing" });
+    return;
+  }
+  const accessToken = req.headers.authorization?.split(" ")[1];
+  const refereshToken = req.cookies.rt;
+
+  // verify access token
+  // if access token is valid
+  if (verifyToken(accessToken)) {
+    res.status(200).json({ message: "accessToken valid" });
+    return;
+  }
+
+  // if refresh token is empty or doesnt exist
+  if (!refereshToken) {
+    res
+      .status(401)
+      .json({ message: "please login . refresh token is missing" });
+    return;
+  }
+  const token = verifyToken(refereshToken);
+  if (token) {
+    const newToken = generateToken({
+      payload: { id: token },
+    });
+    res.setHeader("access-token", newToken);
+    res.status(200).json({
+      message: "new token generated",
+    });
+    return;
+  }
 };

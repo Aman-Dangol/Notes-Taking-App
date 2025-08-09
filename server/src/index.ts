@@ -2,11 +2,12 @@ import express from "express";
 
 import { userRouter } from "./routes/user-routes";
 import { authRouter } from "@/routes/auth-routes";
-import { tokenValidator } from "@/middlewares/token-validator";
-
+import { tokenValidatorMiddleWare } from "@/middlewares/token-validator/token-validator";
+import cp from "cookie-parser";
 const app = express();
 
-app.use(/^\/(?!login|regiser)/, tokenValidator);
+app.use(cp());
+app.use(/^\/(?!login|register)/, tokenValidatorMiddleWare);
 
 app.use(express.json());
 app.use(

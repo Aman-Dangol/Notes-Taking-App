@@ -45,16 +45,16 @@ const InputField = ({
 
   return (
     <div
-      className={`mx-auto w-[80%] mb-2 ${containerClassName}`}
+      className={`mx-auto w-[80%] mb-2  ${containerClassName}`}
       {...otherContainerProps}
     >
-      <div className="bg-white md:grid md:gap-2 items-center md:grid-cols-5 lg:gap-0">
+      <div className="bg-white md:grid md:gap-2 items-center md:grid-cols-5 lg:gap-0 ">
         <label {...labelProps} className={` ${labelClassName}`}>
           {label} :
         </label>
         {asChild === false ? (
           <div
-            className={`col-span-2 flex md:col-span-4 rounded-md py lg:max-h-[35px] gap-2 justify-between items-center px-2 border-2 border-orange-500 bg-white`}
+            className={`col-span-2 flex md:col-span-4  rounded-md py lg:max-h-[35px] gap-2 justify-between items-center px-2 border-2 border-orange-500 `}
           >
             {prefix ? prefix : ""}
             <input
@@ -69,7 +69,7 @@ const InputField = ({
           children
         )}
       </div>
-      <p className="error">{errorMessage} </p>
+      <p className="error ">{errorMessage} </p>
     </div>
   );
 };
