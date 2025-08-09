@@ -6,13 +6,15 @@ import { ParsedUrlQuery } from "querystring";
  */
 interface CustomRequest<
   BodyParam extends object = {},
-  UrlParam extends ParsedUrlQuery = {}
+  UrlParam extends ParsedUrlQuery = {},
+  AddCookies extends object = {}
 > extends Request {
   /**
    * body params
    */
   body: BodyParam;
   query: UrlParam;
+  cookies: { rt: string } & AddCookies;
 }
 
 export type { CustomRequest };

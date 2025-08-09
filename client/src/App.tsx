@@ -10,12 +10,7 @@ function App() {
     Element = <Outlet />;
   }
 
-  return (
-    <>
-      {appSelector}
-      {Element}
-    </>
-  );
+  return <>{Element}</>;
 }
 
 export default App;
