@@ -4,10 +4,11 @@ import { userRouter } from "./routes/user-routes";
 import { authRouter } from "@/routes/auth-routes";
 import { tokenValidatorMiddleWare } from "@/middlewares/token-validator/token-validator";
 import cp from "cookie-parser";
+import { noteRouter } from "@/routes/note-routes";
 const app = express();
 
 app.use(cp());
-app.use(/^\/(?!login|register)/, tokenValidatorMiddleWare);
+app.use(/^\/(?!login|register|verify-token)/, tokenValidatorMiddleWare);
 
 app.use(express.json());
 app.use(
@@ -17,6 +18,7 @@ app.use(
 );
 
 app.use("/user", userRouter);
+app.use("/note", noteRouter);
 
 app.use("/", authRouter);
 

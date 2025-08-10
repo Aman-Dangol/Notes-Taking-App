@@ -15,17 +15,22 @@ model User {
   userName String
   password String
   Note Note[]
+  Category Category[]
 }
 model Category {
   id Int @id @default(autoincrement())
   name String @unique
   Note Note[] @relation("notecategories")
+  userID String
+  User User @relation(fields: [userID], references: [id], onDelete: Cascade,onUpdate: Cascade)
+
 }
 
 model Note {
     id     Int     @id @default(autoincrement())
+    title String
     description String
-    date DateTime
+    date DateTime @default(now())
     userID String 
     category Category[] @relation("notecategories")
     User User @relation(fields: [userID], references: [id], onDelete: Cascade,onUpdate: Cascade)

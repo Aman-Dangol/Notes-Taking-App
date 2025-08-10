@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodError, ZodObject, ZodType } from "zod";
+import { CustomRequest } from "@/utility/types/custom-request";
+import { noteSchemaInput } from "@/zodSchema/note-schema";
 
 /**
  *
@@ -7,7 +9,7 @@ import { ZodError, ZodObject, ZodType } from "zod";
  * @returns a middleware express function
  */
 const zodValidator = (schema: ZodObject | ZodType) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
       schema.parse(req.body);
       next();

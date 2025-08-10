@@ -1,13 +1,20 @@
+import { NoteForm } from "@/components/create-note-form";
 import { DialogBox } from "@/components/Dialog-box";
 import { useDisclosure } from "@/utils/hooks/useDisclosure";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 export const Home = () => {
   const { state, setTrue, setFalse } = useDisclosure();
+  const {
+    state: createState,
+    setTrue: createTrue,
+    setFalse: createFalse,
+  } = useDisclosure();
 
   return (
     <section>
       <header>
-        <nav className="h-[10vh] bg-amber-900 pt-4">
+        <nav className="h-[10vh]  items-center bg-amber-900 p-2 pt-6 ">
           <div>
             <input
               type="text"
@@ -18,6 +25,13 @@ export const Home = () => {
         </nav>
       </header>
       <section className="grid lg:grid-cols-4 sm:grid-cols-2 gap-2 p-2">
+        <section className="border-2 h-80 flex flex-col" onClick={createTrue}>
+          <IoMdAddCircleOutline
+            className="flex-1 w-full hover:color-white"
+            color="#82181a"
+          />
+          <p className="text-center font-semibold">Add note</p>
+        </section>
         {Array.from({ length: 10 }).map(() => (
           <section className="border-2  h-80" onClick={setTrue}>
             <header className=" bg-amber-900 text-white text-center">
@@ -54,6 +68,14 @@ export const Home = () => {
         className="bg-red-900"
       >
         this is dialog box
+      </DialogBox>
+      <DialogBox
+        closeFn={createFalse}
+        open={createState}
+        title="Create Note"
+        className="border border-red-900 bg-[#ffebcd] w-[60vw] rounded-xl"
+      >
+        <NoteForm />
       </DialogBox>
     </section>
   );
