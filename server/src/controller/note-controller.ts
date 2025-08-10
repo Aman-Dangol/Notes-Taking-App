@@ -37,27 +37,48 @@ export const getNoteByUserID = async (
   req: CustomRequest<{}, { s: string }>,
   res: Response
 ) => {
-  const search = req.query.s.split(":")[1];
+  const search = req.query.s.split(":");
 
   let filter;
-  if (search) {
-    filter = [
-      {
-        category: {
-          some: {
-            name: { contains: search },
+  if (typeof search[1] !== "undefined") {
+    if (search[0] === "cat") {
+      filter = [
+        {
+          category: {
+            some: {
+              name: { contains: search[1] },
+            },
           },
         },
-      },
-    ];
+      ];
+    } else if (search[0] === "title") {
+      filter = [
+        {
+          title: { contains: search[1] },
+        },
+      ];
+    }
+    if (search[0] === "desc") {
+      filter = [
+        {
+          description: { contains: search[1] },
+        },
+      ];
+    }
   } else {
     filter = [
       { description: { contains: req.query.s } },
       { title: { contains: req.query.s } },
+      {
+        category: {
+          some: {
+            name: { contains: req.query.s },
+          },
+        },
+      },
     ];
   }
 
-  console.log(search);
   const user = req.app.locals.user;
   const list = await prisma.note.findMany({
     where: {
