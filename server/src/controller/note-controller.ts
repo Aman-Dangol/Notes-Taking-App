@@ -11,10 +11,8 @@ export const createNote = async (
 
   const { user } = req.app.locals;
 
-  console.log(user);
-
   if (user) {
-    const data = await prisma.note.create({
+    await prisma.note.create({
       data: {
         userID: user.id,
         title: rest.title,
@@ -30,10 +28,57 @@ export const createNote = async (
         },
       },
     });
-
-    console.log(data);
   }
-  category.forEach((cat) => {});
 
-  res.json({ message: "data achieved" });
+  res.status(200).json({ message: "note created" });
+};
+
+export const getNoteByUserID = async (
+  req: CustomRequest<{}, { s: string }>,
+  res: Response
+) => {
+  const search = req.query.s.split(":")[1];
+
+  let filter;
+  if (search) {
+    filter = [
+      {
+        category: {
+          some: {
+            name: { contains: search },
+          },
+        },
+      },
+    ];
+  } else {
+    filter = [
+      { description: { contains: req.query.s } },
+      { title: { contains: req.query.s } },
+    ];
+  }
+
+  console.log(search);
+  const user = req.app.locals.user;
+  const list = await prisma.note.findMany({
+    where: {
+      userID: user?.id,
+      OR: filter,
+    },
+    include: {
+      category: {
+        omit: {
+          userID: true,
+        },
+      },
+    },
+    omit: {
+      userID: true,
+    },
+  });
+
+  if (list.length === 0) {
+    res.status(404).json({ message: "no notes!" });
+    return;
+  }
+  res.json({ notes: list });
 };

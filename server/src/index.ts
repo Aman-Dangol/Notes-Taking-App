@@ -5,6 +5,7 @@ import { authRouter } from "@/routes/auth-routes";
 import { tokenValidatorMiddleWare } from "@/middlewares/token-validator/token-validator";
 import cp from "cookie-parser";
 import { noteRouter } from "@/routes/note-routes";
+import { categoryRouter } from "@/routes/category-route";
 const app = express();
 
 app.use(cp());
@@ -19,6 +20,7 @@ app.use(
 
 app.use("/user", userRouter);
 app.use("/note", noteRouter);
+app.use("/category", categoryRouter);
 
 app.use("/", authRouter);
 

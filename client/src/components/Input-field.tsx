@@ -45,7 +45,7 @@ const InputField = ({
 
   return (
     <div
-      className={`mx-auto w-[80%] mb-2  ${containerClassName}`}
+      className={`w-[80%] mb-2   ${containerClassName}`}
       {...otherContainerProps}
     >
       <div className=" bg-inherit md:grid md:gap-2 items-center md:grid-cols-5 lg:gap-0 ">
