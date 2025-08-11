@@ -19,10 +19,10 @@ body {
 }
 
 #auth:checked ~ #login {
-  display: block;
+  display: flex;
 }
 #auth:not(:checked) ~ #register {
-  display: block;
+  display: flex;
 }
 
 .error {

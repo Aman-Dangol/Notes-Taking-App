@@ -106,9 +106,10 @@ export const NoteForm = ({ closeFn }: props) => {
                 : " bg-red-900 "
             }`}
             onClick={() => {
-              const index = watchedcategory.findIndex((cat) => {
-                return cat.categoryName === item.name;
-              });
+              const index =
+                watchedcategory?.findIndex((cat) => {
+                  return cat.categoryName === item.name;
+                }) ?? -1;
 
               console.log(index, item.name);
               if (index !== -1) {
@@ -125,9 +126,10 @@ export const NoteForm = ({ closeFn }: props) => {
 
         {watchedcategory
           .filter((item) => {
-            const index = categoryList?.categories.findIndex(
-              (cat) => cat.name === item.categoryName
-            );
+            const index =
+              categoryList?.categories?.findIndex(
+                (cat) => cat.name === item.categoryName
+              ) ?? -1;
             if (index === -1) return true;
             return false;
           })

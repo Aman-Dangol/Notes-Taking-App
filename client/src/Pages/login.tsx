@@ -74,13 +74,12 @@ const Login = () => {
           Notes Taking App
         </h1>
       </header>
-
-      <section className="h-[80%] rounded-t-2xl pt-12  lg:w-[50%] mx-auto lg:mt-24 lg:h-56 lg:flex lg:rounded-2xl  lg:flex-col lg:justify-center bg-white">
+      <section className="h-[80%] rounded-t-2xl pt-12  lg:w-[50%] mx-auto lg:mt-24 lg:h-56 lg:flex lg:rounded-2xl  lg:flex-col lg:justify-center  bg-white">
         <input type="checkbox" id="auth" defaultChecked hidden />
         {/* login form */}
         <form
           onSubmit={loginFormMethods.handleSubmit(loginSubmit)}
-          className=" bg-white h-full lg:h-fit rounded-2xl py-2 "
+          className="bg-white h-full lg:h-fit rounded-2xl flex-col py-2"
           id="login"
         >
           <h1 className="text-3xl text-center p-2 bg-white rounded-t-2xl font-semibold">
@@ -90,15 +89,21 @@ const Login = () => {
           <InputField
             label="Email Address"
             {...loginFormMethods.register("email")}
+            containerProps={{
+              className: "mx-auto",
+            }}
             errorMessage={loginFormMethods.formState.errors.email?.message}
           />
           <InputField
             label="Password"
+            containerProps={{
+              className: "mx-auto",
+            }}
             {...loginFormMethods.register("password")}
             errorMessage={loginFormMethods.formState.errors.password?.message}
           />
-          <Button text="Submit" className="rounded-md mx-auto block mt-2" />
-          <div className="p-2 float-right">
+          <Button text="Submit" className="rounded-md mt-2" />
+          <div className="p-2 flex justify-end">
             <label htmlFor="auth">
               <span className=" cursor-pointer">
                 Register {<LuArrowRight className="inline" />}{" "}
@@ -108,7 +113,7 @@ const Login = () => {
         </form>
         {/* register form */}
         <form
-          className=" bg-white h-full lg:h-fit rounded-2xl py-2"
+          className="bg-white h-full lg:h-fit rounded-2xl flex-col  py-2"
           onSubmit={registerFormMethods.handleSubmit(registerSubmit)}
           id="register"
         >
@@ -117,11 +122,17 @@ const Login = () => {
           </h1>
           <InputField
             label="Email Address"
+            containerProps={{
+              className: "mx-auto",
+            }}
             {...registerFormMethods.register("email")}
             errorMessage={registerFormMethods.formState.errors.email?.message}
           />
           <InputField
             label="UserName"
+            containerProps={{
+              className: "mx-auto",
+            }}
             {...registerFormMethods.register("userName")}
             errorMessage={
               registerFormMethods.formState.errors.userName?.message
@@ -129,13 +140,16 @@ const Login = () => {
           />
           <InputField
             label="Password"
+            containerProps={{
+              className: "mx-auto",
+            }}
             {...registerFormMethods.register("password")}
             errorMessage={
               registerFormMethods.formState.errors.password?.message
             }
           />
-          <Button text="Submit" className="rounded-md mx-auto block mt-2" />
-          <div className="p-2">
+          <Button text="Submit" className="rounded-md mt-2" />
+          <div className="p-2 flex justify-start">
             <label htmlFor="auth">
               <span className=" cursor-pointer">
                 {<LuArrowLeft className="inline" />} Login{" "}

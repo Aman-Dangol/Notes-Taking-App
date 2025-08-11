@@ -80,6 +80,7 @@ export const getNoteByUserID = async (
   }
 
   const user = req.app.locals.user;
+  console.log(user?.id);
   const list = await prisma.note.findMany({
     where: {
       userID: user?.id,
@@ -102,4 +103,33 @@ export const getNoteByUserID = async (
     return;
   }
   res.json({ notes: list });
+};
+
+export const getNoteByID = async (
+  req: CustomRequest<{}, {}, {}, {}, { id: string }>,
+  res: Response
+) => {
+  const { id } = req.params;
+
+  let parsedId = parseInt(id);
+  if (!parsedId) {
+    res.json({
+      message: "the value was not number e.g note/1",
+    });
+    return;
+  }
+
+  const note = await prisma.note.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+    include: {
+      category: {
+        omit: {
+          userID: true,
+        },
+      },
+    },
+  });
+  res.json(note);
 };

@@ -6,7 +6,6 @@ import { registerData } from "@/zodSchema/register-schema";
 import { NextFunction, Response } from "express";
 import { User } from "../../generated/prisma";
 import prisma from "../../prisma/connect";
-import jwt from "jsonwebtoken";
 import { verifyToken } from "@/utility/verify-tokens";
 
 // to check if the email already exists in the DB
@@ -139,4 +138,9 @@ export const validateToken = (
     });
     return;
   }
+};
+
+export const logout = (_: CustomRequest, res: Response) => {
+  res.clearCookie("rt");
+  res.status(200).json({ message: "logout successfully" });
 };
