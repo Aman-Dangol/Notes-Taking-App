@@ -16,10 +16,7 @@ export const tokenValidatorMiddleWare = (
   res: Response<{ message: string; accessToken?: string }>,
   next: NextFunction
 ) => {
-  logger.log({
-    message: "asdasd",
-    level: "info",
-  });
+  console.log("middleware");
   if (!req.headers.authorization) {
     res.json({ message: "please login access token missing" });
     return;

@@ -10,7 +10,7 @@ const app = express();
 
 app.use(cp());
 app.use(
-  /^(?!\/?(login|register|verify-token)(\/|$))/,
+  /^\/(?!(login|register|verify-token)(\/|$)).*/,
   tokenValidatorMiddleWare
 );
 
