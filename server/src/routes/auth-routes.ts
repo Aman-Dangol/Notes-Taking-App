@@ -1,8 +1,8 @@
 import { zodValidator } from "@/middlewares/zod-validator/zodValidator";
-import { registerScehma } from "@/zodSchema/register-schema";
+import { registerSchema } from "@/zodSchema/register-schema";
 import express from "express";
 
-import { loginScehma } from "@/zodSchema/login-schema";
+import { loginSchema } from "@/zodSchema/login-schema";
 import {
   checkEmailInDb,
   userLogin,
@@ -12,13 +12,20 @@ import {
   logout,
 } from "@/controller/auth-controller";
 
+/**
+ * Auth routes:
+ * - POST /login → Validates login data, checks email, logs in user.
+ * - POST /register → Validates registration data, ensures email is free, creates user.
+ * - GET /verify-token → Checks if access token is valid.
+ * - GET /logout → Logs the user out.
+ */
 const authRouter = express.Router();
 
-authRouter.post("/login", zodValidator(loginScehma), checkEmailInDb, userLogin);
+authRouter.post("/login", zodValidator(loginSchema), checkEmailInDb, userLogin);
 
 authRouter.post(
   "/register",
-  zodValidator(registerScehma),
+  zodValidator(registerSchema),
   getUserByEmail,
   createUser
 );

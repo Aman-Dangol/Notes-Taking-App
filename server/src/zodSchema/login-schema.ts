@@ -1,11 +1,15 @@
 import { z } from "zod";
 
-const loginScehma = z.object({
+/**
+ * Schema for validating login data.
+ * It requires an email and a password.
+ */
+const loginSchema = z.object({
   email: z.email().min(1),
   password: z.string().min(4),
 });
 
-type loginData = z.infer<typeof loginScehma>;
+type loginData = z.infer<typeof loginSchema>;
 
 export type { loginData };
-export { loginScehma };
+export { loginSchema as loginSchema };

@@ -1,5 +1,5 @@
 import {
-  useAppDisptach,
+  useAppDispatch,
   useAppSelector,
 } from "@/utils/hooks/redux-hook/store-hooks";
 import { Login } from "./Pages/login";
@@ -8,9 +8,10 @@ import { useGet } from "@/utils/hooks/axios-hooks/useGet";
 import { useEffect } from "react";
 import { setInterceptor } from "@/utils/axios";
 import { ToastContainer } from "react-toastify";
+
 function App() {
   const token = useAppSelector((state) => state.accessToken.value);
-  const appDispatcher = useAppDisptach();
+  const appDispatcher = useAppDispatch();
 
   const { pathname } = useLocation();
 

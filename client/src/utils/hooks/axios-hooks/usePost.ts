@@ -11,6 +11,14 @@ interface Props<OutputData, InputData> {
   >;
 }
 
+/**
+ * Custom hook to perform POST requests using Axios and React Query.
+ * @param url - The endpoint URL for the POST request.
+ * @param options - Optional configuration for the mutation, such as onSuccess, onError, etc.
+ * @returns A mutation object that can be used to trigger the POST request.
+ * @template OutputData - The expected data type of the response.
+ * @template InputData - The data type of the input to be sent with the POST request.
+ */
 const usePost = <OutputData = unknown, InputData = unknown>({
   url,
   options,

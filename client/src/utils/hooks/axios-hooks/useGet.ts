@@ -12,6 +12,17 @@ interface props<TQueryOutput, TQueryInput> {
     "queryKey" | "queryFn"
   >;
 }
+
+/**
+ * Custom hook to perform GET requests using Axios and React Query.
+ * @param queryKey - The unique key for the query, used for caching and refetching.
+ * @param url - The endpoint URL for the GET request.
+ * @param params - Optional parameters to be sent with the request.
+ * @param options - Optional configuration for the query, such as onSuccess, onError, etc.
+ * @returns A query object that contains the data, error, and status of the request.
+ * @template TQueryOutput - The expected data type of the response.
+ * @template TQueryInput - The data type of the input parameters for the request.
+ */
 const useGet = <TQueryOutput = unknown, TQueryInput = unknown>({
   queryKey,
   url,

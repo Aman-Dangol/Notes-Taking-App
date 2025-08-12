@@ -15,7 +15,7 @@ interface CustomRequest<
    */
   UrlParam extends ParsedUrlQuery = {},
   /**
-   * addtional cookies to set
+   * additional cookies to set
    */
   AddCookies extends object = {},
   /**
@@ -36,7 +36,7 @@ interface CustomRequest<
   app: Application & {
     locals: { user?: User } & Locals;
   };
-  cookies: { rt: string } & AddCookies;
+  cookies: { refreshToken: string } & AddCookies;
 }
 
 export type { CustomRequest };

@@ -8,7 +8,6 @@ import { User } from "../../generated/prisma";
 import prisma from "../../prisma/connect";
 import { verifyToken } from "@/utility/verify-tokens";
 
-// to check if the email already exists in the DB
 export const getUserByEmail = async (
   request: CustomRequest<registerData>,
   res: Response,
@@ -24,12 +23,14 @@ export const getUserByEmail = async (
     return;
   }
 
-  res.json({ message: "email is already taken" });
+  res.status(409).json({ message: "email is already taken" });
 };
 
-// check if email actuallu exists before handling login
+// check if email actually exists before handling login
 export const checkEmailInDb = async (
-  request: CustomRequest<loginData & { userObj: registerData }>,
+  request: CustomRequest<
+    loginData & { userObj: Omit<registerData, "confirmPassword"> }
+  >,
   res: Response,
   next: NextFunction
 ) => {
@@ -65,15 +66,16 @@ export const userLogin = async (
     });
 
     const refreshToken = generateToken({ payload: { id }, expiresIn: "7d" });
-    res.cookie("rt", refreshToken, {
+    res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
     });
 
     res.json({ accessToken });
     return;
   }
   res.status(404).json({
-    message: "invalid credentials",
+    message: "Invalid credentials",
   });
 };
 
@@ -81,7 +83,7 @@ export const createUser = async (
   req: CustomRequest<registerData>,
   res: Response<{ message: string }>
 ) => {
-  const { password, ...others } = req.body;
+  const { password, confirmPassword, ...others } = req.body;
   const hashed = await hashFn(password);
 
   prisma.user
@@ -93,9 +95,9 @@ export const createUser = async (
         message: "data created successfully",
       });
     })
-    .catch(() => {
-      res.sendStatus(400).json({
-        message: "error",
+    .catch((e) => {
+      res.status(400).json({
+        message: e,
       });
     });
 };
@@ -111,7 +113,7 @@ export const validateToken = (
     return;
   }
   const accessToken = req.headers.authorization?.split(" ")[1];
-  const refereshToken = req.cookies.rt;
+  const refreshToken = req.cookies.refreshToken;
 
   // verify access token
   // if access token is valid
@@ -120,14 +122,14 @@ export const validateToken = (
     return;
   }
 
-  // if refresh token is empty or doesnt exist
-  if (!refereshToken) {
+  // if refresh token is empty or doesn't exist
+  if (!refreshToken) {
     res
       .status(401)
       .json({ message: "please login . refresh token is missing" });
     return;
   }
-  const token = verifyToken(refereshToken);
+  const token = verifyToken(refreshToken);
   if (token) {
     const newToken = generateToken({
       payload: { id: token },
@@ -141,6 +143,6 @@ export const validateToken = (
 };
 
 export const logout = (_: CustomRequest, res: Response) => {
-  res.clearCookie("rt");
+  res.clearCookie("refreshToken");
   res.status(200).json({ message: "logout successfully" });
 };

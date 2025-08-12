@@ -1,8 +1,12 @@
 import { CustomRequest } from "@/utility/types/custom-request";
 import { noteSchemaInput } from "@/zodSchema/note-schema";
-import { Response } from "express";
+import { NextFunction, Response } from "express";
 import prisma from "../../prisma/connect";
 
+/**
+ * Creates a new note for the authenticated user.
+ * - Connects or creates categories as needed.
+ */
 export const createNote = async (
   req: CustomRequest<noteSchemaInput>,
   res: Response<unknown>
@@ -30,15 +34,20 @@ export const createNote = async (
     });
   }
 
-  res.status(200).json({ message: "note created" });
+  res.status(200).json({ message: "Note created" });
 };
 
+/**
+ * Retrieves notes for the authenticated user, optionally filtered by query string.
+ * - Supports filters: category (`cat:`), title (`title:`), description (`desc:`).
+ */
 export const getNoteByUserID = async (
-  req: CustomRequest<{}, { s: string }>,
+  req: CustomRequest<{}, { s: string; pageNo: string }>,
   res: Response
 ) => {
   const search = req.query.s.split(":");
 
+  console.log(req.query);
   let filter;
   if (typeof search[1] !== "undefined") {
     if (search[0] === "cat") {
@@ -80,12 +89,22 @@ export const getNoteByUserID = async (
   }
 
   const user = req.app.locals.user;
-  console.log(user?.id);
+  const count = await prisma.note.count({
+    where: {
+      userID: user?.id,
+    },
+  });
   const list = await prisma.note.findMany({
     where: {
       userID: user?.id,
       OR: filter,
     },
+    skip: parseInt(req.query.pageNo) * 5,
+    take: 5,
+    orderBy: {
+      date: "desc",
+    },
+
     include: {
       category: {
         omit: {
@@ -98,13 +117,12 @@ export const getNoteByUserID = async (
     },
   });
 
-  if (list.length === 0) {
-    res.status(404).json({ message: "no notes!" });
-    return;
-  }
-  res.json({ notes: list });
+  res.json({ notes: list, count });
 };
 
+/**
+ * Retrieves a single note by ID.
+ */
 export const getNoteByID = async (
   req: CustomRequest<{}, {}, {}, {}, { id: string }>,
   res: Response
@@ -114,7 +132,7 @@ export const getNoteByID = async (
   let parsedId = parseInt(id);
   if (!parsedId) {
     res.json({
-      message: "the value was not number e.g note/1",
+      message: "Invalid note ID. Example: note/1",
     });
     return;
   }
@@ -132,4 +150,70 @@ export const getNoteByID = async (
     },
   });
   res.json(note);
+};
+
+/**
+ * Middleware to check if a note exists by ID before proceeding.
+ */
+export const checkNoteExist = async (
+  req: CustomRequest<noteSchemaInput | { id: number }, {}, {}>,
+  res: Response,
+  next: NextFunction
+) => {
+  const data = await prisma.note.findUnique({
+    where: {
+      id: req.body.id,
+    },
+  });
+  if (!data) {
+    res.status(404).json({ message: "Note doesn't exist" });
+    return;
+  }
+  next();
+};
+
+/**
+ * Deletes a note by ID.
+ */
+export const deleteNote = async (
+  req: CustomRequest<{ id: number }>,
+  res: Response
+) => {
+  await prisma.note.delete({
+    where: {
+      id: req.body.id,
+    },
+  });
+  console.log("object");
+
+  res.json({ message: "Data deleted successfully" });
+};
+
+export const updateNote = async (
+  req: CustomRequest<noteSchemaInput>,
+  res: Response
+) => {
+  console.log(req.body.category);
+  const userID = req.app.locals.user?.id ?? "";
+  await prisma.note.update({
+    where: {
+      id: req.body.id,
+    },
+    data: {
+      title: req.body.title,
+      date: new Date(),
+      description: req.body.description,
+      category: {
+        connectOrCreate: req.body.category.map((e) => ({
+          where: { name: e.categoryName },
+          create: {
+            name: e.categoryName,
+            userID: userID,
+          },
+        })),
+      },
+    },
+  });
+
+  res.status(200).json({ message: "Data Updated Successfully" });
 };

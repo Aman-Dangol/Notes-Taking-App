@@ -1,4 +1,5 @@
 import { Button } from "@/components/Button";
+import { CategoryBox } from "@/components/categoryBox";
 import { InputField } from "@/components/Input-field";
 import { noteSchema, type noteSchemaInput } from "@/Schema/note-schema";
 import { useGet } from "@/utils/hooks/axios-hooks/useGet";
@@ -10,6 +11,7 @@ import { toast } from "react-toastify";
 
 interface props {
   closeFn: () => void;
+  type?: "create" | "update";
 }
 
 export const NoteForm = ({ closeFn }: props) => {
@@ -49,6 +51,9 @@ export const NoteForm = ({ closeFn }: props) => {
         });
         closeFn();
       },
+      onError: (data) => {
+        toast.error(data.message);
+      },
     },
   });
 
@@ -58,30 +63,30 @@ export const NoteForm = ({ closeFn }: props) => {
   });
 
   const formSubmit = (data: noteSchemaInput) => {
+    console.log("object");
     createNote(data);
   };
 
-  const watchedcategory = watch("category");
+  const watchedCategory = watch("category");
 
-  console.log(watchedcategory);
-
+  console.log(errors);
   return (
     <form
       onSubmit={handleSubmit(formSubmit)}
       className="flex flex-col items-center pb-6"
     >
       <InputField
-        label="title"
+        label="Title"
         {...register("title")}
         errorMessage={errors.title?.message}
       />
       <InputField
-        label="description"
+        label="Description"
         {...register("description")}
         errorMessage={errors.description?.message}
       />
       <InputField
-        label="category"
+        label="Category"
         errorMessage={errors.category?.message}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
@@ -98,33 +103,30 @@ export const NoteForm = ({ closeFn }: props) => {
       />
       <div className="flex flex-wrap  p-2 gap-2 my-2 over w-[80%]">
         {categoryList?.categories?.map((item, index) => (
-          <span
+          <CategoryBox
+            categoryName={item.name}
             key={index}
             className={`p-1 rounded-2xl text-white cursor-pointer hover:scale-110 transition-transform min-w-[40px] text-center ${
-              watchedcategory.some((i) => i.categoryName === item.name)
-                ? "bg-green-600"
-                : " bg-red-900 "
+              watchedCategory.some((i) => i.categoryName === item.name)
+                ? "!bg-green-600"
+                : "!bg-red-900 "
             }`}
             onClick={() => {
               const index =
-                watchedcategory?.findIndex((cat) => {
+                watchedCategory?.findIndex((cat) => {
                   return cat.categoryName === item.name;
                 }) ?? -1;
 
-              console.log(index, item.name);
               if (index !== -1) {
                 remove(index);
-                console.log("removeds");
               } else {
                 append({ categoryName: item.name });
               }
             }}
-          >
-            {item.name}
-          </span>
+          />
         ))}
 
-        {watchedcategory
+        {watchedCategory
           .filter((item) => {
             const index =
               categoryList?.categories?.findIndex(
@@ -135,33 +137,29 @@ export const NoteForm = ({ closeFn }: props) => {
           })
           .map((item, index) => {
             return (
-              <span
-                key={index}
-                className={`p-1 ${
-                  watchedcategory.some(
+              <CategoryBox
+                categoryName={item.categoryName}
+                className={`p-1 rounded-2xl text-white cursor-pointer hover:scale-110 transition-transform min-w-[40px] text-center ${
+                  watchedCategory.some(
                     (i) => i.categoryName === item.categoryName
                   )
-                    ? "bg-green-600"
-                    : " bg-red-900 "
-                } rounded-2xl text-white hover:scale-110 transition-transform min-w-[40px] text-center`}
+                    ? "!bg-green-600"
+                    : "!bg-red-900 "
+                }`}
                 onClick={() => {
                   if (
-                    watchedcategory.some((cat) => {
-                      console.log(item.categoryName, cat.categoryName);
+                    watchedCategory.some((cat) => {
                       return item.categoryName === cat.categoryName;
                     })
                   ) {
                     remove(index);
-                    console.log("removeds");
                   }
                 }}
-              >
-                {item.categoryName}
-              </span>
+              />
             );
           })}
       </div>
-      <Button text="submit" type="submit" />
+      <Button text="Submit" type="submit" />
     </form>
   );
 };

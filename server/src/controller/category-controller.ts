@@ -2,6 +2,11 @@ import { CustomRequest } from "@/utility/types/custom-request";
 import { Response } from "express";
 import prisma from "../../prisma/connect";
 
+/**
+ * Fetches categories for the authenticated user.
+ * - Reads `user` from `req.app.locals`.
+ * - Returns categories without `userID`, or a message if none found.
+ */
 export const getCategoryByUser = async (req: CustomRequest, res: Response) => {
   const user = req.app.locals.user;
   const category = await prisma.category.findMany({
@@ -15,7 +20,7 @@ export const getCategoryByUser = async (req: CustomRequest, res: Response) => {
 
   if (category.length === 0) {
     res.json({
-      message: "no category found",
+      message: "No category found",
     });
     return;
   }

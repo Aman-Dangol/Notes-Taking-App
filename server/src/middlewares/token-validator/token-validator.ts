@@ -3,6 +3,13 @@ import { CustomRequest } from "@/utility/types/custom-request";
 import { verifyToken } from "@/utility/verify-tokens";
 import { NextFunction, Response } from "express";
 
+/**
+ * Middleware to validate or refresh authentication tokens.
+ * - Checks for an access token in the `Authorization` header.
+ * - Verifies the access token; if valid → calls `next()`.
+ * - If invalid and a refresh token exists, verifies it and issues a new access token.
+ * - Responds with appropriate error messages if tokens are missing or invalid.
+ */
 export const tokenValidatorMiddleWare = (
   req: CustomRequest,
   res: Response<{ message: string; accessToken?: string }>,
@@ -13,7 +20,7 @@ export const tokenValidatorMiddleWare = (
     return;
   }
   const accessToken = req.headers.authorization?.split(" ")[1];
-  const refereshToken = req.cookies.rt;
+  const refreshToken = req.cookies.refreshToken;
 
   // verify access token
   // if access token is valid
@@ -22,14 +29,14 @@ export const tokenValidatorMiddleWare = (
     return;
   }
 
-  // if refresh token is empty or doesnt exist
-  if (!refereshToken) {
+  // if refresh token is empty or doesn't exist
+  if (!refreshToken) {
     res
       .status(401)
       .json({ message: "please login . refresh token is missing" });
     return;
   }
-  const token = verifyToken(refereshToken);
+  const token = verifyToken(refreshToken);
   if (token) {
     const newToken = generateToken({
       payload: { id: token },

@@ -16,6 +16,11 @@ interface tokenGenerationProps {
   payload: object;
 }
 
+/**
+ * Generates a JWT token with the provided payload and expiration time.
+ * @param {tokenGenerationProps} options - Options for token generation.
+ * @returns {string} The generated JWT token.
+ */
 export const generateToken = ({
   expiresIn = "1h",
   payload,

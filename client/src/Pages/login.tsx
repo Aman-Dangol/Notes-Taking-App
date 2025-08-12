@@ -6,43 +6,47 @@ import {
   type registerInputSchema,
 } from "@/Schema/register.schema";
 import { usePost } from "@/utils/hooks/axios-hooks/usePost";
-import { useAppDisptach } from "@/utils/hooks/redux-hook/store-hooks";
+import { useAppDispatch } from "@/utils/hooks/redux-hook/store-hooks";
 import { setAccessToken } from "@/utils/redux/auth-slice";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { LuArrowRight, LuArrowLeft } from "react-icons/lu";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const dipatcher = useAppDisptach();
+  const dispatcher = useAppDispatch();
+  const cb = useRef<HTMLInputElement>(null);
   const registerFormMethods = useForm<registerInputSchema>({
     mode: "onChange",
     resolver: zodResolver(registerSchema),
   });
+
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const [showRegisterPassword, setShowRegisterPassword] = useState<{
+    password: boolean;
+    confirmPassword: boolean;
+  }>({ confirmPassword: false, password: false });
 
   const loginFormMethods = useForm<loginInputSchema>({
     mode: "onChange",
     resolver: zodResolver(loginSchema),
   });
 
-  const { mutate } = useMutation({
-    mutationFn: async (data: registerInputSchema) => {
-      const response = await axios.post("/api/register", data, {
-        headers: {
-          Authorization: "",
-        },
-      });
-
-      return response.data;
-    },
-    onSuccess(data) {
-      console.log(data);
-      registerFormMethods.reset();
-    },
-    onError(error) {
-      console.log(error);
+  const { mutate } = usePost<{ message: string }>({
+    url: "register",
+    options: {
+      onSuccess: (data) => {
+        toast.success(data.message);
+        registerFormMethods.reset();
+        if (cb.current) cb.current.checked = true;
+      },
+      onError: (data) => {
+        toast.error(data.response?.data.message);
+      },
     },
   });
 
@@ -50,7 +54,7 @@ const Login = () => {
     url: "/login",
     options: {
       onSuccess(data) {
-        dipatcher(setAccessToken(data.accessToken));
+        dispatcher(setAccessToken(data.accessToken));
         toast.success("Logged in successfully");
       },
       onError(data) {
@@ -75,7 +79,7 @@ const Login = () => {
         </h1>
       </header>
       <section className="h-[80%] rounded-t-2xl pt-12  lg:w-[50%] mx-auto lg:mt-24 lg:h-56 lg:flex lg:rounded-2xl  lg:flex-col lg:justify-center  bg-white">
-        <input type="checkbox" id="auth" defaultChecked hidden />
+        <input type="checkbox" id="auth" ref={cb} defaultChecked hidden />
         {/* login form */}
         <form
           onSubmit={loginFormMethods.handleSubmit(loginSubmit)}
@@ -99,8 +103,16 @@ const Login = () => {
             containerProps={{
               className: "mx-auto",
             }}
+            type={showPassword ? "text" : "password"}
             {...loginFormMethods.register("password")}
             errorMessage={loginFormMethods.formState.errors.password?.message}
+            suffix={
+              showPassword ? (
+                <IoMdEye onClick={() => setShowPassword((prev) => !prev)} />
+              ) : (
+                <IoMdEyeOff onClick={() => setShowPassword((prev) => !prev)} />
+              )
+            }
           />
           <Button text="Submit" className="rounded-md mt-2" />
           <div className="p-2 flex justify-end">
@@ -143,9 +155,63 @@ const Login = () => {
             containerProps={{
               className: "mx-auto",
             }}
+            type={showRegisterPassword.password ? "text" : "password"}
             {...registerFormMethods.register("password")}
             errorMessage={
               registerFormMethods.formState.errors.password?.message
+            }
+            suffix={
+              showPassword ? (
+                <IoMdEye
+                  onClick={() =>
+                    setShowRegisterPassword((prev) => ({
+                      ...prev,
+                      password: !prev.password,
+                    }))
+                  }
+                />
+              ) : (
+                <IoMdEyeOff
+                  onClick={() =>
+                    setShowRegisterPassword((prev) => ({
+                      ...prev,
+                      password: !prev.password,
+                    }))
+                  }
+                />
+              )
+            }
+          />
+          <InputField
+            label="Confirm Password"
+            containerProps={{
+              className: "mx-auto",
+            }}
+            type={showRegisterPassword.confirmPassword ? "text" : "password"}
+            {...registerFormMethods.register("confirmPassword")}
+            errorMessage={
+              registerFormMethods.formState.errors.confirmPassword?.message
+            }
+            suffix={
+              showPassword ? (
+                <IoMdEye
+                  onClick={() =>
+                    setShowRegisterPassword((prev) => ({
+                      ...prev,
+                      confirmPassword: !prev.confirmPassword,
+                    }))
+                  }
+                />
+              ) : (
+                <IoMdEyeOff
+                  onClick={() =>
+                    setShowRegisterPassword((prev) => ({
+                      ...prev,
+                      confirmPassword: !prev.confirmPassword,
+                    }))
+                  }
+                />
+              )
             }
           />
           <Button text="Submit" className="rounded-md mt-2" />

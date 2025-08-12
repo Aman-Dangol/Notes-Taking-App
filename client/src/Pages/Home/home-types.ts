@@ -1,5 +1,6 @@
 export interface noteListApiData {
   notes: Array<Note>;
+  count: number;
 }
 
 export interface Note {
