@@ -9,7 +9,10 @@ import { categoryRouter } from "@/routes/category-route";
 const app = express();
 
 app.use(cp());
-app.use(/^\/(?!login|register|verify-token)/, tokenValidatorMiddleWare);
+app.use(
+  /^(?!\/?(login|register|verify-token)(\/|$))/,
+  tokenValidatorMiddleWare
+);
 
 app.use(express.json());
 app.use(

@@ -2,6 +2,7 @@ import { CustomRequest } from "@/utility/types/custom-request";
 import { noteSchemaInput } from "@/zodSchema/note-schema";
 import { NextFunction, Response } from "express";
 import prisma from "../../prisma/connect";
+import { logger } from "@/utility/logger/winston";
 
 /**
  * Creates a new note for the authenticated user.
@@ -47,7 +48,6 @@ export const getNoteByUserID = async (
 ) => {
   const search = req.query.s.split(":");
 
-  console.log(req.query);
   let filter;
   if (typeof search[1] !== "undefined") {
     if (search[0] === "cat") {

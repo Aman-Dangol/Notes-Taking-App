@@ -1,3 +1,4 @@
+import { logger } from "@/utility/logger/winston";
 import { generateToken } from "@/utility/token-generator/token-generator";
 import { CustomRequest } from "@/utility/types/custom-request";
 import { verifyToken } from "@/utility/verify-tokens";
@@ -15,6 +16,10 @@ export const tokenValidatorMiddleWare = (
   res: Response<{ message: string; accessToken?: string }>,
   next: NextFunction
 ) => {
+  logger.log({
+    message: "asdasd",
+    level: "info",
+  });
   if (!req.headers.authorization) {
     res.json({ message: "please login access token missing" });
     return;
