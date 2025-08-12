@@ -11,6 +11,7 @@ import {
   validateToken,
   logout,
 } from "@/controller/auth-controller";
+import { getUserDetails } from "@/controller/user-controller";
 
 /**
  * Auth routes:
@@ -32,6 +33,6 @@ authRouter.post(
 
 authRouter.get("/verify-token", validateToken);
 
-authRouter.get("/logout", logout);
+authRouter.get("/logout", getUserDetails, logout);
 
 export { authRouter };

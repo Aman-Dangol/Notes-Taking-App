@@ -1,6 +1,7 @@
 import { CustomRequest } from "@/utility/types/custom-request";
 import { Response } from "express";
 import prisma from "../../prisma/connect";
+import { logger } from "@/utility/logger/winston";
 
 /**
  * Fetches categories for the authenticated user.
@@ -24,6 +25,12 @@ export const getCategoryByUser = async (req: CustomRequest, res: Response) => {
     });
     return;
   }
+
+  logger.log({
+    message: `Served ${user?.email} their categories`,
+    level: "info",
+  });
+
   res.status(200).json({
     categories: category,
   });

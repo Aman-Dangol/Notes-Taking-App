@@ -4,16 +4,8 @@ import { User } from "../../generated/prisma";
 import { CustomRequest } from "@/utility/types/custom-request";
 import jwt from "jsonwebtoken";
 import { tr } from "zod/v4/locales";
-
-/**
- * Returns all users.
- */
-const getUsers = async (_: Request, res: Response<{ users: User[] }>) => {
-  const users = await prisma.user.findMany();
-  res.json({
-    users,
-  });
-};
+import { logger } from "@/utility/logger/winston";
+import { userInfo } from "os";
 
 /**
  * Middleware: attaches authenticated user (if any) to app.locals.
@@ -37,6 +29,10 @@ export const getUserDetails = async (
     },
   });
 
+  logger.log({
+    message: `provided ${user?.email}'s details`,
+    level: "info",
+  });
   if (user) req.app.locals.user = user;
   next();
 };
@@ -73,6 +69,9 @@ export const getUserInfoToSend = async (
     categories,
   };
 
+  logger.log({
+    message: `sent ${email}'s data to client`,
+    level: "info",
+  });
   res.json(payload);
 };
-export { getUsers };

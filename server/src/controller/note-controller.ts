@@ -117,6 +117,10 @@ export const getNoteByUserID = async (
     },
   });
 
+  logger.log({
+    message: `Served ${user?.email} their notes and also total amount of notes they have`,
+    level: "info",
+  });
   res.json({ notes: list, count });
 };
 
@@ -131,6 +135,10 @@ export const getNoteByID = async (
 
   let parsedId = parseInt(id);
   if (!parsedId) {
+    logger.log({
+      message: `user provided irrelevant id`,
+      level: "error",
+    });
     res.json({
       message: "Invalid note ID. Example: note/1",
     });
@@ -149,6 +157,10 @@ export const getNoteByID = async (
       },
     },
   });
+  logger.log({
+    message: `Serving User the note`,
+    level: "info",
+  });
   res.json(note);
 };
 
@@ -166,6 +178,10 @@ export const checkNoteExist = async (
     },
   });
   if (!data) {
+    logger.log({
+      message: `User tried to access a note that doesn't exist`,
+      level: "error",
+    });
     res.status(404).json({ message: "Note doesn't exist" });
     return;
   }
@@ -184,8 +200,11 @@ export const deleteNote = async (
       id: req.body.id,
     },
   });
-  console.log("object");
 
+  logger.log({
+    message: `User deleted a note`,
+    level: "info",
+  });
   res.json({ message: "Data deleted successfully" });
 };
 
@@ -193,8 +212,12 @@ export const updateNote = async (
   req: CustomRequest<noteSchemaInput>,
   res: Response
 ) => {
-  console.log(req.body.category);
   const userID = req.app.locals.user?.id ?? "";
+
+  logger.log({
+    message: `${req.app.locals.user?.email} updated a note with ID ${req.body.id}`,
+    level: "info",
+  });
   await prisma.note.update({
     where: {
       id: req.body.id,
