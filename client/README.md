@@ -76,6 +76,7 @@ src/
 │   │       └── store-hooks.ts
 │   └── redux/          # Redux store configuration
 │       ├── auth-slice.ts
+│       ├── UserInfo-slice.ts
 │       └── store.ts
 ├── App.tsx             # Main application component
 ├── main.tsx           # Application entry point
