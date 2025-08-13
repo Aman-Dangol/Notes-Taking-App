@@ -11,3 +11,42 @@
 {"level":"info","message":"provided j@d.com's details","service":"user-service"}
 {"level":"info","message":"sent j@d.com's data to client","service":"user-service"}
 {"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"aman@dangol.com logged in","service":"user-service"}
+{"level":"info","message":"provided aman@dangol.com's details","service":"user-service"}
+{"level":"info","message":"provided aman@dangol.com's details","service":"user-service"}
+{"level":"info","message":"sent aman@dangol.com's data to client","service":"user-service"}
+{"level":"info","message":"Served aman@dangol.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided aman@dangol.com's details","service":"user-service"}
+{"level":"info","message":"Served aman@dangol.com their categories","service":"user-service"}
+{"level":"info","message":"provided aman@dangol.com's details","service":"user-service"}
+{"level":"info","message":"provided aman@dangol.com's details","service":"user-service"}
+{"level":"info","message":"Served aman@dangol.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided aman@dangol.com's details","service":"user-service"}
+{"level":"info","message":"Served aman@dangol.com their categories","service":"user-service"}
+{"level":"info","message":"provided aman@dangol.com's details","service":"user-service"}
+{"level":"info","message":"aman@dangol.com updated a note with ID 33","service":"user-service"}
+{"level":"info","message":"provided aman@dangol.com's details","service":"user-service"}
+{"level":"info","message":"Served aman@dangol.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"Serving User the note","service":"user-service"}
+{"level":"info","message":"Serving User the note","service":"user-service"}
+{"level":"info","message":"User deleted a note","service":"user-service"}
+{"level":"info","message":"provided aman@dangol.com's details","service":"user-service"}
+{"level":"info","message":"Served aman@dangol.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided aman@dangol.com's details","service":"user-service"}
+{"level":"info","message":"provided aman@dangol.com's details","service":"user-service"}
+{"level":"info","message":"sent aman@dangol.com's data to client","service":"user-service"}
+{"level":"info","message":"Served aman@dangol.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"new User created test@test.com","service":"user-service"}
+{"level":"error","message":"test@test.com's login failed","service":"user-service"}
+{"level":"error","message":"test@test.com's login failed","service":"user-service"}
+{"level":"info","message":"test@test.com logged in","service":"user-service"}
+{"level":"info","message":"provided test@test.com's details","service":"user-service"}
+{"level":"info","message":"provided test@test.com's details","service":"user-service"}
+{"level":"info","message":"sent test@test.com's data to client","service":"user-service"}
+{"level":"info","message":"Served test@test.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided test@test.com's details","service":"user-service"}
+{"level":"info","message":"provided test@test.com's details","service":"user-service"}
+{"level":"info","message":"provided test@test.com's details","service":"user-service"}
+{"level":"info","message":"Served test@test.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided test@test.com's details","service":"user-service"}
+{"level":"info","message":"Served test@test.com their categories","service":"user-service"}

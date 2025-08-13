@@ -16,7 +16,7 @@ const registerSchema = z
     },
     {
       path: ["confirmPassword"],
-      error: "confirm password and password are not same",
+      error: "Passwords do not match",
     }
   );
 
