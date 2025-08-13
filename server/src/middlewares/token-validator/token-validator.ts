@@ -16,6 +16,7 @@ export const tokenValidatorMiddleWare = (
   res: Response<{ message: string; accessToken?: string }>,
   next: NextFunction
 ) => {
+  console.log("object");
   if (!req.headers.authorization) {
     logger.log({
       message: "Access Token Missing",
@@ -33,6 +34,8 @@ export const tokenValidatorMiddleWare = (
   if (verifyToken(accessToken)) {
     next();
     return;
+  } else {
+    res.json({ message: "invalid Token" });
   }
 
   // if refresh token is empty or doesn't exist

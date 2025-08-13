@@ -7,3 +7,7 @@
 {"level":"info","message":"provided j@d.com's details","service":"user-service"}
 {"level":"info","message":"sent j@d.com's data to client","service":"user-service"}
 {"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"sent j@d.com's data to client","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}

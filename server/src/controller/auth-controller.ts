@@ -148,6 +148,8 @@ export const validateToken = (
     });
     res.status(200).json({ message: "accessToken valid" });
     return;
+  } else {
+    res.json({ message: "invalid token" });
   }
 
   // if refresh token is empty or doesn't exist
