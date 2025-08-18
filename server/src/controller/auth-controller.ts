@@ -148,8 +148,6 @@ export const validateToken = (
     });
     res.status(200).json({ message: "accessToken valid" });
     return;
-  } else {
-    res.json({ message: "invalid token" });
   }
 
   // if refresh token is empty or doesn't exist
@@ -172,6 +170,7 @@ export const validateToken = (
       message: "refresh token validated and new access token was generated",
       level: "info",
     });
+
     res.setHeader("access-token", newToken);
     res.status(200).json({
       message: "new token generated",

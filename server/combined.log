@@ -50,3 +50,65 @@
 {"level":"info","message":"Served test@test.com their notes and also total amount of notes they have","service":"user-service"}
 {"level":"info","message":"provided test@test.com's details","service":"user-service"}
 {"level":"info","message":"Served test@test.com their categories","service":"user-service"}
+{"level":"error","message":"Access Token Missing","service":"user-service"}
+{"level":"info","message":"j@d.com logged in","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"sent j@d.com's data to client","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"Served j@d.com their categories","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"sent j@d.com's data to client","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"Served j@d.com their categories","service":"user-service"}
+{"level":"info","message":"refresh token validated and new access token was generated","service":"user-service"}
+{"level":"info","message":"j@d.com logged in","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"sent j@d.com's data to client","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"refresh token validated and new access token was generated","service":"user-service"}
+{"level":"info","message":"refresh token validated and new access token was generated","service":"user-service"}
+{"level":"info","message":"refresh token validated and new access token was generated","service":"user-service"}
+{"level":"info","message":"refresh token validated and new access token was generated","service":"user-service"}
+{"level":"info","message":"j@d.com logged in","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"sent j@d.com's data to client","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"refresh token validated and new access token was generated","service":"user-service"}
+{"level":"info","message":"j@d.com logged in","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"sent j@d.com's data to client","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"sent j@d.com's data to client","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"refresh token validated and new access token was generated","service":"user-service"}
+{"level":"info","message":"refresh token validated and new access token was generated","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"sent j@d.com's data to client","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
+{"level":"info","message":"provided j@d.com's details","service":"user-service"}
+{"level":"info","message":"Served j@d.com their notes and also total amount of notes they have","service":"user-service"}
